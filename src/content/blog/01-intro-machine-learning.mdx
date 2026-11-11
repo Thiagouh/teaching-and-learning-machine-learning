@@ -1,0 +1,167 @@
+---
+title: 'Introdução ao Machine Learning'
+description: 'Entendendo os fundamentos antes dos algoritmos'
+pubDate: 'Dec 20 2025'
+heroImage: '/images/intro_classificacao.png'
+tags: ['ml-basics', 'teoria']
+updatedDate: 2026-11-11
+trail: fundamentos
+order: 1
+status: published
+prerequisites: ['Nenhum conhecimento prévio de Machine Learning']
+---
+import BlogImage from '../../components/BlogImage.astro';
+import Callout from '../../components/Callout.astro';
+
+Quando falamos de Aprendizado de Máquina (Machine Learning), nos referimos a métodos de inteligência artificial que **aprendem padrões a partir de dados**. Repare que eu não disse "seguem instruções". Essa é a grande virada de chave, e é por ela que vamos começar.
+
+## 0. A grande diferença: quem escreve as regras?
+
+Imagine que você precisa prever o preço de uma casa. Na programação tradicional, você sentaria com um corretor, perguntaria como ele pensa e transformaria isso em regras: *"se tem mais de 100 m², some tanto; se tem mais de 3 quartos, some mais tanto..."*. Você escreve as regras, o programa as aplica.
+
+Mas e se existirem centenas de fatores e você não souber como eles se combinam? É aí que o Machine Learning entra: em vez de **escrevermos as regras**, entregamos **dados e respostas** e deixamos o modelo **descobrir as regras sozinho**.
+
+<BlogImage
+  src="/images/intro_programacao_vs_ml.png"
+  alt="Dois diagramas: na programação tradicional, regras e dados entram no programa e saem respostas; no Machine Learning, dados e respostas entram no aprendizado e saem as regras"
+  caption="A inversão do Machine Learning. Na programação tradicional (em cima) as regras entram e as respostas saem. No Machine Learning (embaixo) as respostas entram e é a regra que sai, e essa regra é o nosso modelo."
+/>
+
+Perceba que a saída do aprendizado é justamente o **modelo**: uma função que, depois de treinada, conseguimos usar para novos dados. Veremos uma delas no próximo blog: $f_{w,b}(x) = wx + b$.
+
+## 1. O vocabulário básico
+
+Antes de falar dos tipos de aprendizado, vamos combinar os nomes das coisas. Vou usar o exemplo das casas, que vai nos acompanhar por vários blogs:
+
+| Tamanho (m²) | Quartos | Idade (anos) | Preço (R$ mil) |
+| :---: | :---: | :---: | :---: |
+| 65 | 2 | 10 | 280 |
+| 120 | 3 | 5 | 450 |
+| 90 | 3 | 22 | 310 |
+| 150 | 4 | 2 | **?** |
+
+* **Exemplo de treino:** Cada linha da tabela. Uma casa que o modelo pode estudar.
+* **Features (ou $x$):** As colunas de entrada, ou seja, o que sabemos sobre cada casa (tamanho, quartos, idade).
+* **Label / Target (ou $y$):** A resposta que queremos prever. Aqui, o preço.
+* **Modelo:** A função que tenta transformar $x$ em uma previsão $\hat{y}$.
+* **Treinamento:** O processo de ajustar o modelo usando os exemplos que **já têm resposta**.
+* **Previsão (inferência):** Usar o modelo treinado em algo novo. Veja a última linha: a casa de 150 m² não tem preço conhecido, e é exatamente para ela que o modelo deve dar uma resposta.
+
+<Callout icon="💡" type="info" title="Dica">
+Mais para frente, no blog de Regressão Linear Múltipla, você vai ver uma tabela como essa de novo. É a mesma ideia: o $n$ é o número de features e o $m$ é o número de linhas.
+</Callout>
+
+## 2. Mas como o modelo "aprende" de verdade?
+
+Sem entrar na matemática ainda (ela vem nos próximos blogs!), a lógica geral é um ciclo muito parecido com estudar para uma prova usando um simulado:
+
+1. **Palpite:** o modelo recebe uma casa e chuta um preço (no início, um chute bem ruim).
+2. **Erro:** comparamos o chute com o preço real e medimos o quanto ele errou. Essa medida tem nome: **função de custo**.
+3. **Ajuste:** o modelo mexe nos seus parâmetros para errar um pouquinho menos. Quem faz isso é o **gradiente descendente**.
+4. **Repetição:** o ciclo se repete milhares de vezes, até o erro parar de diminuir.
+
+Lembra do dedo descendo o vale no blog de Gradiente Descendente? Era exatamente esse ciclo acontecendo. Hoje o foco é entender **em que situações** usamos cada tipo de treinamento.
+
+## 3. Aprendizado Supervisionado
+
+É um treinamento no qual entregamos uma série de entradas (features, ou 'x') que já possuem consigo suas respostas (labels, ou 'y'). Ou seja, entregamos o "gabarito" para que o modelo saiba prever a resposta mais adequada para uma entrada na qual não se sabe a resposta ainda (ou o modelo não deve saber, já que ele tem que prever).
+
+> Damos a ele a pergunta (x) e a resposta (y). O objetivo do modelo é aprender a mapear um para o outro.
+
+Dentro dele, o que define o tipo do problema é **o formato da resposta**:
+
+* **Regressão**: Quando queremos prever um número. (Ex.: Preço de casas, Temperatura)
+* **Classificação**: Quando queremos prever uma categoria. (Ex.: "É um Cachorro ou um Gato?", "É um tumor ou não?")
+
+<BlogImage
+  src="/images/intro_regressao_vs_classificacao.png"
+  alt="À esquerda, gráfico de regressão com pontos de casas e uma reta ajustada; à direita, gráfico de classificação com dois grupos de pontos separados por uma linha"
+  caption="À esquerda, a regressão: a reta responde 'quanto?' e a estrela é uma casa nova cujo preço o modelo estima. À direita, a classificação: a linha azul (fronteira de decisão) separa as categorias e responde 'qual?'. A estrela cai do lado dos tumores benignos."
+/>
+
+### Regressão: a resposta é um número
+
+Olhando o gráfico da esquerda, o modelo viu várias casas já vendidas (os X vermelhos) e aprendeu uma reta que resume a relação entre tamanho e preço. Para a casa nova (a estrela), basta subir até a reta e ler o valor. Note que a resposta pode ser **qualquer número** no eixo vertical: R$ 374 mil, R$ 380 mil, R$ 412 mil...
+
+Outros exemplos do dia a dia:
+* Prever quantos clientes vão entrar na loja amanhã.
+* Estimar a temperatura de uma cidade daqui a 3 horas.
+* Prever o tempo de entrega de um pedido.
+
+### Classificação: a resposta é uma categoria
+
+No gráfico da direita, cada ponto é um tumor descrito por duas features (tamanho e irregularidade da borda) e a cor é o label (benigno ou maligno). O modelo aprende uma **fronteira de decisão**: de um lado da linha, ele diz "benigno"; do outro, "maligno". Para um caso novo, ele só olha de que lado da fronteira o ponto caiu.
+
+Aqui a resposta **não é um número no meio do caminho**: é uma entre poucas opções possíveis. Quando são duas opções, chamamos de classificação **binária**. Com mais de duas (ex.: cachorro, gato ou coelho), é classificação **multiclasse**.
+
+Outros exemplos:
+* Um e-mail é spam ou não é spam?
+* Essa transação de cartão é fraude ou é legítima?
+* Qual objeto aparece nessa imagem: pessoa, carro ou bicicleta?
+
+<Callout icon="🤔" type="warning" title="Cuidado com o nome!">
+A **Regressão Logística**, que veremos mais para frente, tem "regressão" no nome mas é um algoritmo de **classificação**. O que define se o problema é de regressão ou classificação é o tipo da resposta (número ou categoria), e não o nome do algoritmo.
+</Callout>
+
+## 4. Aprendizado Não-Supervisionado
+
+Diferente do anterior, aqui não entregamos o gabarito. Nesse caso, o modelo procura padrões nos dados sem receber as respostas esperadas. Uma possibilidade é agrupar os dados conforme a similaridade entre eles, mas o aprendizado não supervisionado não se limita a isso.
+
+**Exemplo:**
+
+* **Clusterização**: O modelo analisa muitos dados (tipo mil) e separa em grupos (três, por exemplo), onde cada grupo possui padrões distintos. Isso é muito útil!
+
+Veja a diferença lado a lado. Os pontos são **exatamente os mesmos** nos três gráficos. O que muda é o que sabemos sobre eles:
+
+<BlogImage
+  src="/images/intro_supervisionado_vs_nao.png"
+  alt="Três gráficos de dispersão com os mesmos pontos: no primeiro coloridos por classe, no segundo todos cinza, no terceiro coloridos por grupos encontrados pelo modelo com marcadores nos centros"
+  caption="Os mesmos dados em três situações. À esquerda, o aprendizado supervisionado: cada ponto vem com sua cor (o label). No meio, o ponto de partida do não supervisionado: só temos as posições. À direita, o modelo agrupou por proximidade e marcou o centro de cada grupo com um X."
+/>
+
+Repare no gráfico do meio: se eu te entregasse só ele, você provavelmente conseguiria enxergar **três nuvens de pontos**. O modelo de clusterização faz algo parecido, só que com números, e funciona mesmo quando há dezenas de features (aí sim os nossos olhos não acompanham!).
+
+Um detalhe importante: o modelo encontrou **3 grupos**, mas **não sabe o nome deles**. Quem interpreta é você. Será que o grupo azul é "clientes que compram pouco e sempre"? Isso é trabalho humano.
+
+Outros exemplos:
+* **Segmentação de clientes:** agrupar pessoas com hábitos de compra parecidos para fazer campanhas diferentes.
+* **Detecção de anomalias:** achar o que foge do padrão, como uma transação muito diferente do normal.
+* **Redução de dimensionalidade:** resumir muitas features em poucas, para conseguir visualizar os dados.
+
+## 5. Quando o gabarito é caro: outras formas de aprendizado
+
+Criar labels dá trabalho. Alguém precisa olhar milhares de imagens e marcar uma por uma. Por isso existem outras abordagens, que ficam entre os dois extremos que vimos. Só para você saber que elas existem:
+
+* **Semi-supervisionado:** Temos poucos dados com label e muitos sem. O modelo aproveita os dois. Ex.: 100 fotos classificadas por um médico e 100 mil sem classificação.
+* **Auto-supervisionado:** O próprio dado gera o gabarito. Ex.: esconder uma palavra de uma frase e pedir para o modelo adivinhá-la. É assim que muitos modelos de linguagem começam seu treinamento.
+* **Aprendizado por Reforço:** Não existe gabarito, existe **recompensa**. Um agente age, o ambiente responde, e o agente ajusta o comportamento para ganhar mais recompensas.
+
+<BlogImage
+  src="/images/intro_aprendizado_reforco.png"
+  alt="Diagrama com um agente e um ambiente. O agente envia uma ação ao ambiente e recebe de volta um novo estado e uma recompensa"
+  caption="O ciclo do Aprendizado por Reforço. O agente age (seta azul) e o ambiente devolve o que aconteceu e uma recompensa (seta vermelha). Pense em alguém aprendendo um videogame: ninguém entrega o gabarito, só o placar."
+/>
+
+Neste curso, o nosso foco inicial será o **supervisionado**, pois é nele que a Regressão Linear, o Gradiente Descendente e quase tudo que vem a seguir se encaixam.
+
+## 6. Um último conceito: generalização
+
+Existe uma pegadinha escondida em tudo isso. O modelo é treinado com dados que **ele já viu**, mas o que importa é que ele funcione com dados que **ele nunca viu**. Um modelo que só decora os exemplos de treino é inútil!
+
+<BlogImage
+  src="/images/intro_generalizacao.png"
+  alt="Gráfico com pontos de treino, uma reta de modelo e dois pontos novos com previsões marcadas por estrelas"
+  caption="Os X vermelhos são o que o modelo viu no treino. Os círculos pretos são dados novos, e as estrelas, as previsões do modelo para eles. As linhas pontilhadas mostram o erro da previsão em dados novos: é isso que realmente queremos que seja pequeno."
+/>
+
+É por isso que, na prática, separamos uma parte dos dados para **testar** o modelo e fingimos que ela é "nova". Esse assunto vai ter seu próprio blog mais para frente (treino, validação e teste).
+
+## Resumo
+
+| | Supervisionado | Não-Supervisionado | Reforço |
+| :--- | :--- | :--- | :--- |
+| **O que entregamos** | Features ($x$) e labels ($y$) | Apenas features ($x$) | Um ambiente com recompensas |
+| **O que o modelo faz** | Aprende a mapear $x$ em $y$ | Descobre padrões e grupos | Aprende a agir para maximizar a recompensa |
+| **Exemplos** | Preço de casas, spam, tumor | Segmentar clientes, anomalias | Jogos, robôs |
+
+Agora que você sabe o que é Machine Learning e onde cada tipo de aprendizado se encaixa, está na hora de ver um modelo de verdade em ação. No próximo blog vamos conhecer a **[Regressão Linear e a Função de Custo](/blog/algoritmos-supervisionados/02-regressao-linear-funcao-custo/)**.

@@ -30,14 +30,14 @@ $f_{{w,b}}(x) = wx + b$
 />
 
 ## 2. A função de Custo
-A função de custo vem para nos dar uma métrica de qual ruim o nosso modelo está. Ou seja, se o modelo está errando muito a função de custo nos dará um valor alto e se o modelo estiver errando pouco a função de custo nos dará um valor baixo (perceba que não é uma métrica de quão bom ele é, mas sim de quanto menos ele erra).
+A função de custo vem para nos dar uma métrica de quão ruim o nosso modelo está. Ou seja, se o modelo está errando muito a função de custo nos dará um valor alto e se o modelo estiver errando pouco a função de custo nos dará um valor baixo (perceba que não é uma métrica de quão bom ele é, mas sim de quanto menos ele erra).
 
 $J(w,b) = \frac{1}{2m} \sum_{i=1}^{m} \left(\hat{y}^{(i)} - y^{(i)}\right)^2$
 
 onde:
-* $i$ : Não falei o que era anteriormente, mas não há segredo. O $i$ representa qualquer dado que exista para o modelo. seja o 1º, o 46º, 127º, ou... o $i$-ésimo!
+* $i$ : Não falei o que era anteriormente, mas não há segredo. O $i$ representa qualquer dado que exista para o modelo, seja o 1º, o 46º, 127º, ou... o $i$-ésimo!
 * $\hat{y}$ : É aquele valor que o modelo previu. Veja que é diferente do valor real ($y$).
-* $(\hat{y}^{(i)}-{y}^{(i)})^2$ : Aqui temos a subtração do valor real com o valor previsto pelo modelo. É elevado ao quadrado para "inflar" o erro. Isso pune erros muitos altos (erro: 1000, eleve ao quadrado e veja o monstro). **Importante: Note que $\hat{y} = f_{{ w , b }}(x^{(i)})$**
+* $(\hat{y}^{(i)}-{y}^{(i)})^2$ : Aqui temos a subtração do valor real com o valor previsto pelo modelo. É elevado ao quadrado para "inflar" o erro. Isso pune erros muito altos (erro: 1000, eleve ao quadrado e veja o monstro). **Importante: Note que $\hat{y} = f_{{ w , b }}(x^{(i)})$**
 * $\sum_{i=1}^{m}$ : É o somatório de todos os erros. Do primeiro (note que o $i$ é igual a 1, ou seja, o primeiro dado. Se você ainda não entendeu o que é $i$, talvez isso tenha clareado) ao último dado que o modelo recebe, representado por $m$.
 * $\frac{1}{2m}$ : Perceba que estamos dividindo a estimativa de erro por $2m$. A divisão por $m$ calcula a média dos erros ao quadrado, em vez de uma soma que cresce com a quantidade de exemplos. O fator $1/2$ simplifica a expressão da derivada, cancelando o 2 que aparece ao derivar o quadrado. Portanto, $J$ é metade do erro quadrático médio.
 * $J{(w,b)}$ : Assim como $f(x)$ está para a própria função, $J{(w,b)}$ está para a função de custo.
