@@ -1,123 +1,45 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import StudyRoadmap from '../components/StudyRoadmap.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
-
 <!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
+<html lang="pt-BR">
+  <head><BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} /></head>
   <body>
     <Header />
-    <main>
+    <main id="conteudo">
       <h1>Aprendendo Machine Learning</h1>
-      <p>
-        Este site estará destinado as minhas anotações de estudos sobre Machine
-        Learning. Portanto, aqui será registrado todo tipo de aprendizado que eu
-        adquirir durante os estudos e estarei tentando explicar todo o conteúdo
-        aprendido.
-      </p>
-      <p>
-        A ordem de conteúdo será conforme está no curso de <a
-          href="https://learn.deeplearning.ai/specializations/machine-learning/lesson/bw6i6/welcome-to-machine-learning!"
-          >Machine Learning do deeplearning.ai</a
-        > com adições de conteúdos a minha preferência, na qual eu achar relevante.
-      </p>
-      <p>Aqui estão os meus registros de estudos divididos em tópicos:</p>
-      <ul class="roadmap-list">
-        <li class="category-item">
-          <span class="category-title">🤖 Machine Learning Teórico</span>
-          <ul class="sub-list">
-            <li>
-              <a href="/blog/01-intro-machine-learning"
-                >Introdução ao Machine Learning (ainda em construção)</a
-              >
-            </li>
-            <li>
-              <a href="/blog/algoritmos-supervisionados/02-regressao-linear-funcao-custo"
-                >Regressão Linear e Função de Custo</a
-              >
-            </li>
-            <li>
-              <a href="/blog/algoritmos-supervisionados/03-gradiente-descendente">Gradiente Descendente</a>
-            </li>
-            <li>
-              <a href="/blog/algoritmos-supervisionados/04-regressao-linear-multipla">Regressão Linear Múltipla</a>
-            </li>
-            <li>
-              <a href="/blog/algoritmos-supervisionados/05-vetorizacao">Vetorização</a>
-            </li>
-            <li>
-              <a href="/blog/algoritmos-supervisionados/06-gradiente-descendente-multiplo">Gradiente Descendente Múltiplo</a> (ainda em construcao)
-            </li>
-          </ul>
-        </li>
-
-        <li class="category-item">
-          <span class="category-title">🐍 Python e Ferramentas</span>
-          <ul class="sub-list">
-            <li>
-              <a href="/blog/python-ferramentas/configurando-ambiente">Jupyter, NumPy e Pandas</a> (ainda em construção)
-            </li>
-          </ul>
-        </li>
-
-        <li class="category-item">
-          <span class="category-title">🚀 Projetos Práticos</span>
-          <ul class="sub-list">
-            <li>
-              <a href="/blog/projetos-praticos/meu-primeiro-modelo">Prevendo preços de casas</a> (ainda em construção)
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <p>Este site é destinado às minhas anotações de estudos sobre Machine Learning.
+        Aqui eu tento explicar o que aprendo, conectando a intuição, a matemática
+        e a prática. A ideia continua sendo aprender ensinando!</p>
+      <aside class="construction" aria-labelledby="retomada">
+        <h2 id="retomada">De volta aos estudos: em construção</h2>
+        <p>Estou retomando o site, revisando os primeiros textos e preparando novos
+          conteúdos a partir dos estudos e projetos que desenvolvi desde então,
+          principalmente em visão computacional.</p>
+        <p>Os textos disponíveis continuam abertos para leitura. O roteiro abaixo mostra o que já existe e o que pretendo escrever.</p>
+      </aside>
+      <h2 class="section-title">Por onde começar?</h2>
+      <p>Se você está começando, siga a ordem de Fundamentos de Machine Learning.
+        Os primeiros textos acompanham meus estudos do curso de
+        <a href="https://learn.deeplearning.ai/specializations/machine-learning/lesson/bw6i6/welcome-to-machine-learning!">Machine Learning da DeepLearning.AI</a>.
+        As outras trilhas vão reunir ferramentas e experiências práticas, incluindo os estudos com vídeos de basquete.</p>
+      <p class="legend"><strong>Publicado:</strong> texto disponível.
+        <strong>Em escrita:</strong> já pode ser lido, mas ainda está sendo completado.
+        <strong>Planejado:</strong> ideia de conteúdo, ainda sem página.</p>
+      <StudyRoadmap />
     </main>
     <Footer />
   </body>
 </html>
-
 <style>
-  .roadmap-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 2rem;
-  }
-
-  .category-item {
-    margin-bottom: 2rem;
-    border-left: 4px solid var(--accent);
-    padding-left: 1rem;
-  }
-
-  .category-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: rgb(var(--black));
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .sub-list {
-    list-style: disc;
-    margin-left: 1.5rem;
-    color: rgb(var(--gray-dark));
-  }
-
-  .sub-list li {
-    margin-bottom: 0.5rem;
-  }
-
-  .badge-new {
-    background-color: #d1fae5;
-    color: #065f46;
-    font-size: 0.75rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: bold;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
+  h1 { font-size: clamp(2.1rem, 7vw, 3.5rem); }
+  .section-title { font-size: 1.65em; }
+  .construction { border-left: 4px solid var(--accent); background: #f0f3ff; border-radius: 0 8px 8px 0; padding: 1.25rem; margin: 2rem 0; }
+  .construction h2 { font-size: 1.3em; }
+  .construction p:last-child { margin-bottom: 0; }
+  .legend { font-size: 0.85em; }
 </style>

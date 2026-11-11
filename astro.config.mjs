@@ -9,7 +9,7 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://aprendendo-machine-learning.vercel.app',
 	integrations: [mdx({
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [rehypeKatex],

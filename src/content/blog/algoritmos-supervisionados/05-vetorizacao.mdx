@@ -3,6 +3,11 @@ title: 'Vetorização'
 pubDate: 2025-12-20
 description: 'Aqui veremos a fundo a importância da vetorização'
 heroImage: '/images/vetorizacao_numpy.png'
+updatedDate: 2026-10-28
+trail: fundamentos
+order: 5
+status: published
+prerequisites: ['Regressão Linear Múltipla', 'Python básico']
 ---
 import Callout from '../../../components/Callout.astro'
 
@@ -46,10 +51,10 @@ Matematicamente isso é perfeito. Mas, computacionalmente, isso pode ser um pesa
 Se você já programou em alguma linguagem de programação, sua intuição mandaria utilizar um loop ```for``` para percorrer todos os dados e somá-los. Porém, em Python, para Machine Learning, evitamos utilizá-lo.
 
 ### Por que evitar loops em Python?
-Python é uma linguagem interpretada e dinâmica. Ou seja, a cada vez que o loop roda, o programa irá verificar o tipo da variável, alocar memória e executar a soma. Isso acaba gerando uma sobrecarga enorme principalmente se houver uma enorme quantidade de dados a serem processados pelo loop.
+Python é uma linguagem interpretada e dinâmica. Ou seja, cada iteração passa pelo interpretador para acessar os objetos e executar as operações, podendo criar novos objetos e alocar memória. Isso acaba gerando uma sobrecarga enorme principalmente se houver uma enorme quantidade de dados a serem processados pelo loop.
 
 ## Introdução a Vetorização (NumPy)
-Então se utilizar loops não é a melhor abordagem para esse caso, temos uma alternativa perfeita para essa situação que é justamente a **Vetorização**. A vetorização permite que o nosso computador execute operações em conjuntos de dados inteiros de uma só vez. Isso acontece por meio de instruções de baixo nível na CPU chamado SIMD (Single Instruction, Multiple Data).
+Então se utilizar loops não é a melhor abordagem para esse caso, temos uma alternativa perfeita para essa situação que é justamente a **Vetorização**. A vetorização permite que o nosso computador execute operações em conjuntos de dados inteiros de uma só vez. Isso delega os cálculos a rotinas compiladas e otimizadas, que podem aproveitar instruções SIMD (Single Instruction, Multiple Data) e outros recursos do hardware.
 
 Para usar isso em Python, utilizamos a biblioteca **NumPy**.
 
@@ -108,7 +113,7 @@ print(f"Tempo com vetorização: {end - start:.5f} segundos.")
 | Loop `for` (Python) | 0.05918s | 1x (Base) |
 | **Vetorização (NumPy)** | **0.00186s** | **~32x mais rápido** |
 
-Note que a implementação vetorizada é muito mais rápida (sim, por millisegundos. Mas ainda é ~32x mais rápido a vetorização em relação ao loop).
+Nessa medição, a implementação vetorizada foi aproximadamente 32x mais rápida. Esse ganho varia com o ambiente, o tamanho dos dados e a biblioteca utilizada; não é uma garantia para qualquer operação.
 
 ## Conexão com a Matemática 
 Lembra da fórmula matemática que vimos no Blog passado que envolvia o Produto Escalar ($f_{\mathbf{w},b}(\mathbf{x}) = \mathbf{w} \cdot \mathbf{x} + b $)? A vetorização permite traduzir essa matemática diretamente para o código. Em vez de escrevermos 10 linhas de loop, podemos simplesmente escrever:
@@ -145,7 +150,7 @@ A linha do tempo seria basicamente:
 * Somente após terminar essa conta, ele avança para o próximo tempo $t_{1}$, para processar o índice 1.
 * Isso se repete até o último elemento ($t_{n}$).
 
-Ou seja, para o vetor de 1.000.000 de elementos, o processador iria ter que realizar 1.000.000 ciclos dessa conta. Meio demorado, hein.
+Ou seja, para o vetor de 1.000.000 de elementos, o loop executa 1.000.000 de iterações dessa conta, o que não significa 1.000.000 de ciclos de CPU. Meio demorado, hein.
 
 ### Com vetorização
 
@@ -162,4 +167,4 @@ def dot_product_vetorizado(w, x):
     return np.dot(w, x)
 ```
 
-No código acima, todas as multiplicações acontecem paralelamente. Graças a Vetorização, o hardware ataca grandes blocos de dados simultaneamente, reduzindo drasticamente as janelas de tempo necessárias.
+No código acima, o NumPy delega o cálculo a rotinas otimizadas, reduzindo a sobrecarga do loop em Python. Elas podem processar blocos de dados com SIMD e, dependendo da biblioteca e da operação, usar múltiplas threads. Isso não significa que todas as multiplicações acontecem ao mesmo tempo.

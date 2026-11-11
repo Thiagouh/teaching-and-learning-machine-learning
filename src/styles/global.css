@@ -119,3 +119,18 @@ hr {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+.study-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  padding: 0.2rem 0.55rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.study-badge.published { color: #165534; background: #e4f5eb; }
+.study-badge.in-progress { color: #744600; background: #fff0cd; }
+.study-badge.planned { color: #46516a; background: #edf0f5; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.4rem 0; }

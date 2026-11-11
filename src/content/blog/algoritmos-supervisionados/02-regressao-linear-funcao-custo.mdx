@@ -3,6 +3,11 @@ title: 'Regressão Linear e Função de Custo'
 pubDate: 2025-12-20
 description: 'O que é a Regressão Linear e a Função de Custo'
 heroImage: '/images/custo_3d_superficie.png'
+updatedDate: 2026-10-28
+trail: fundamentos
+order: 2
+status: published
+prerequisites: ['Introdução ao Machine Learning', 'equação da reta e somatórios']
 ---
 import BlogImage from '../../../components/BlogImage.astro';
 
@@ -19,7 +24,7 @@ $f_{{w,b}}(x) = wx + b$
 * $f_{{ w , b }}(x)$ : É a previsão da máquina ($\hat{y}$).
 
 <BlogImage
-  src="/public/images/regressao-linear.png"
+  src="/images/regressao-linear.png"
   alt="Gráfico de dispersão com reta ajustada"
   caption="Ajustando uma reta aos dados de treino. O objetivo é fazer a reta passar o mais perto possível de todos os pontos."
 />
@@ -34,7 +39,7 @@ onde:
 * $\hat{y}$ : É aquele valor que o modelo previu. Veja que é diferente do valor real ($y$).
 * $(\hat{y}^{(i)}-{y}^{(i)})^2$ : Aqui temos a subtração do valor real com o valor previsto pelo modelo. É elevado ao quadrado para "inflar" o erro. Isso pune erros muitos altos (erro: 1000, eleve ao quadrado e veja o monstro). **Importante: Note que $\hat{y} = f_{{ w , b }}(x^{(i)})$**
 * $\sum_{i=1}^{m}$ : É o somatório de todos os erros. Do primeiro (note que o $i$ é igual a 1, ou seja, o primeiro dado. Se você ainda não entendeu o que é $i$, talvez isso tenha clareado) ao último dado que o modelo recebe, representado por $m$.
-* $\frac{1}{2m}$ : Perceba que estamos dividindo a estimativa de erro por $2m$. Isso permite que o erro seja estipulado pela média dos erros. Assim, não importa se foram muitos ou poucos dados utilizados, teremos uma estimativa justa. O 2 que acompanha $m$ é apenas para facilitar os cálculos para o computador quando envolver gradiente descendente.
+* $\frac{1}{2m}$ : Perceba que estamos dividindo a estimativa de erro por $2m$. A divisão por $m$ calcula a média dos erros ao quadrado, em vez de uma soma que cresce com a quantidade de exemplos. O fator $1/2$ simplifica a expressão da derivada, cancelando o 2 que aparece ao derivar o quadrado. Portanto, $J$ é metade do erro quadrático médio.
 * $J{(w,b)}$ : Assim como $f(x)$ está para a própria função, $J{(w,b)}$ está para a função de custo.
 
 ## Talvez você tenha dificuldade de visualizar mentalmente...

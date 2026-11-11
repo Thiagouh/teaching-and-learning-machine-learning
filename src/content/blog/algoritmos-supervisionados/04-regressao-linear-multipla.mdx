@@ -3,10 +3,15 @@ title: 'Regressão Linear Múltipla'
 pubDate: 2025-12-20
 description: 'Regressão Linear Múltipla'
 heroImage: '/images/regressao_multipla.png'
+updatedDate: 2026-10-28
+trail: fundamentos
+order: 4
+status: published
+prerequisites: ['Regressão Linear e Função de Custo']
 ---
 import BlogImage from '../../../components/BlogImage.astro'
 
-**Regressão Linear Múltipla** é simplesmente uma Regressão Linear com **múltiplas features (entradas)**, que difere da Regressão Linear Simples (ou univariada) no quesito entradas, onde vimos num [blog anterior](../algoritmos-supervisionados/02-regressao-linear-funcao-custo.mdx) que ela recebe apenas uma feature. Porém, a Regressão Linear Múltipla permanece buscando **apenas uma saída (target)**.
+**Regressão Linear Múltipla** é simplesmente uma Regressão Linear com **múltiplas features (entradas)**, que difere da Regressão Linear Simples (ou univariada) no quesito entradas, onde vimos num [blog anterior](/blog/algoritmos-supervisionados/02-regressao-linear-funcao-custo/) que ela recebe apenas uma feature. Porém, a Regressão Linear Múltipla permanece buscando **apenas uma saída (target)**.
 
 Como agora temos uma lista de features (ex.: tamanho da casa, número de quartos, número de andares e idade da casa), temos que atualizar nossos termos matemáticos.
 
@@ -15,7 +20,7 @@ Como agora temos uma lista de features (ex.: tamanho da casa, número de quartos
 ## Nova notação matemática
 
 * $n$ **(minúsculo)** : Número total de features.
-* $x_j$ **(x subscrito j)** : Representa a lista de features, onde $j$ vai de 1 até $n$.
+* $x_j$ **(x subscrito j)** : Representa a feature de índice $j$, onde $j$ vai de 1 até $n$. Para um exemplo específico, é o valor dessa entrada.
 * $x^{(i)}$ **(x sobrescrito i)** : É o vetor (lista de números) que contém todas as features do exemplo de treinamento número $i$.
 * $x_{j}^{(i)}$ : É o valor específico $j$ do exemplo de treinamento $i$.
 
@@ -34,10 +39,10 @@ O $n$ representa a quantidade de **colunas de entradas** (as características do
 * **Na tabela:** Conte as colunas azuis rotuladas como $x$. Temos Tamanho ($x_1$), Quartos ($x_2$), Andares ($x_3$) e Idade ($x_4$).
 * **Conclusão:** $n = 4$.
 
-### 2. A lista de features ($x_j$)
+### 2. Uma feature ($x_j$)
 Esta notação refere-se a uma **característica específica** (uma coluna inteira). O índice $j$ diz qual característica específica estamos olhando.
 * **Exemplo:** $x_2$ representa a feature "Quartos". Se falarmos de $x_3$, estamos falando da característica "Andares".
-* É a lista de todas as features disponíveis para o modelo aprender ($x_1$, $x_2$, $x_3$ e $x_4$).
+* O conjunto de todas as features é representado por $x_1$, $x_2$, $x_3$ e $x_4$.
 
 ### 3. O exemplo de treinamento ($x^{(i)}$)
 O $x^{(i)}$ refere-se a uma **linha inteira** de dados, exceto pelo índice e o preço. É o conjunto de dados em uma única casa.
@@ -95,7 +100,7 @@ $$
 \vec{x} = [x_1, x_2, x_3, \dots, x_n]
 $$
 
-Agora que temos os parâmetros como vetores, podemos realizar a operação de **Produto Escalar** (que realiza a multiplicação dos pares correspondentes e soma todos os resultados), diminuindo a complexidade matemática do modelo e tornando-o mais rápido.
+Agora que temos os parâmetros como vetores, podemos realizar a operação de **Produto Escalar** (que realiza a multiplicação dos pares correspondentes e soma todos os resultados), escrevendo o mesmo cálculo de forma compacta e permitindo usar implementações otimizadas. A quantidade de operações continua crescendo com o número de features.
 
 $$
 f_{w,b}(x) = \vec{w} \cdot \vec{x} + b

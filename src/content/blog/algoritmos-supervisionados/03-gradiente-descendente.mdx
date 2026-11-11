@@ -3,21 +3,26 @@ title: 'Gradiente Descendente'
 pubDate: 2025-12-20
 description: 'A Importância do Gradiente Descendente'
 heroImage: '/images/gradiente_descendente_multi_path.png'
+updatedDate: 2026-10-28
+trail: fundamentos
+order: 3
+status: published
+prerequisites: ['Regressão Linear e Função de Custo', 'noção de derivada']
 ---
 import BlogImage from '../../../components/BlogImage.astro'
 
-Se você acabou de passar pelo Blog que fala sobre **Regressão Linear e Função de Custo**, você está no lugar certo! Se ainda não leu ou não sabe o que é, [acesse aqui](/blog/02-regressao-linear-funcao-custo/).
+Se você acabou de passar pelo Blog que fala sobre **Regressão Linear e Função de Custo**, você está no lugar certo! Se ainda não leu ou não sabe o que é, [acesse aqui](/blog/algoritmos-supervisionados/02-regressao-linear-funcao-custo/).
 
 Vimos com a Função de Custo o quão impreciso o nosso modelo pode ser. Mas... como podemos fazer com que ele melhore? ou seja, como podemos fazer com que a função de custo nos devolva o menor resultado possível ou até mesmo nulo? Para responder isso, utilizamos o Gradiente Descendente.
 
-O Gradiente Descendente, por definição, é um algoritmo de otimização que minimiza a função de custo de forma iterativa ajustando os parâmetros ($w$ e $b$) na direção da inclinação mais íngreme.
+O Gradiente Descendente, por definição, é um algoritmo de otimização que minimiza a função de custo de forma iterativa ajustando os parâmetros ($w$ e $b$) na direção oposta ao gradiente, que aponta para o maior crescimento local da função.
 
 ## **Como funciona na prática?**
 
 Vamos utilizar a própria imagem no topo da página para exemplificar: 
 * com seu dedo, aponte para qualquer ponto aleatório do gráfico convexo que possua um custo alto e, em seguida, tente arrastar seu dedo até a estrela que representa o Mínimo Global (o menor custo possível).
 
-Parabéns! Com seu dedo, você simulou o trabalho de um gradiente descendente. Provavelmente não foi uma simulação perfeita, pois o gradiente descendente utiliza a lógica matemática para sempre atingir os pontos de maior inclinação, e intuição e visualização podem não fornecer a melhor precisão, mas você chegou no ponto em questão.
+Parabéns! Com seu dedo, você simulou o trabalho de um gradiente descendente. Provavelmente não foi uma simulação perfeita, pois o gradiente descendente utiliza a lógica matemática para seguir a direção local de maior descida, e intuição e visualização podem não fornecer a melhor precisão, mas você chegou no ponto em questão.
 
 ## A Fórmula Matemática
 
@@ -35,8 +40,8 @@ $$
 
 * $=$ **(Atribuição)** : Aqui o sinal de igual é de **atribuição** e não de igualdade. Estamos atualizando o valor de $w$ e $b$ por novos valores de $w$ e $b$. Cuidado nesse detalhe!
 * $\alpha$ **(Taxa de Aprendizado)** : É um número pequeno (Ex.: 0.01) que define o tamanho do passo na hora da descida. Um número alto (Ex.: 1.0) pode levar a passos muito largos e isso pode levar à divergência, o que não é desejado.
-* $\frac{\partial}{\partial w}$ e $\frac{\partial}{\partial b}$ **(Derivada)** : É o gradiente. Em cálculo, a derivada dá a inclinação da reta tangente naquele ponto. É justamente ela quem diz se a reta está subindo ou descendo.
-* $-$ **(Sinal de Menos)** : O sinal de menos irá obrigar a derivada a sempre descer. Veja:
+* $\frac{\partial}{\partial w}$ e $\frac{\partial}{\partial b}$ **(Derivada)** : São operadores de derivada parcial. As derivadas em relação aos parâmetros formam o gradiente. Em uma dimensão, a derivada dá a inclinação da reta tangente naquele ponto. É justamente ela quem diz se a reta está subindo ou descendo.
+* $-$ **(Sinal de Menos)** : O sinal de menos faz a atualização seguir a direção contrária ao crescimento local. O custo só diminui se o tamanho do passo for adequado. Veja:
   * Se a inclinação é positiva (subindo para a direita), queremos ir para a esquerda (diminuir o $w$, ou $b$). Subtrair um positivo diminui o $w$ (ou $b$).
   * Se a inclinação é negativa (subindo para a esquerda), queremos ir para a direita (aumentar o $w$, ou $b$). Subtrair um negativo aumenta o $w$ (ou $b$).
   * **Conclusão**: O sinal de menos nos obriga a sempre trabalhar para o lado contrário à subida.

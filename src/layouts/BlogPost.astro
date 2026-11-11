@@ -1,22 +1,30 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { imageMetadata } from "astro/assets/utils";
+import type { ImageMetadata } from "astro";
+import { statusLabels, trails } from '../data/trilhas';
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 
-type Props = Omit<CollectionEntry<"blog">["data"], "heroImage"> & {
+type Props = Omit<CollectionEntry<"blog">["data"], "heroImage" | "trail" | "order" | "status" | "prerequisites"> & {
   heroImage?: string | ImageMetadata;
+  trail?: CollectionEntry<'blog'>['data']['trail'];
+  order?: number;
+  status?: CollectionEntry<'blog'>['data']['status'];
+  prerequisites?: string[];
+  previous?: { id: string; title: string };
+  next?: { id: string; title: string };
 };
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, trail, status, prerequisites = [], pending, previous, next } = Astro.props;
+const currentTrail = trails.find((item) => item.id === trail);
 ---
 
-<html lang="en">
+<html lang="pt-BR">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={heroImage} />
     <style>
       main {
         width: calc(100% - 2em);
@@ -60,7 +68,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
   <body>
     <Header />
-    <main>
+    <main id="conteudo">
       <article>
         <div class="hero-image">
           {
@@ -79,7 +87,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
               {
                 updatedDate && (
                   <div class="last-updated-on">
-                    Last updated on <FormattedDate date={updatedDate} />
+                    Atualizado em <FormattedDate date={updatedDate} />
                   </div>
                 )
               }
@@ -87,10 +95,31 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
             <h1>{title}</h1>
             <hr />
           </div>
+          {currentTrail && (
+            <aside class="study-info" aria-label="Orientações de estudo">
+              <p><a href={`/blog/#${trail}`}>{currentTrail.title}</a> · <span class={`study-badge ${status}`}>{statusLabels[status ?? 'published']}</span></p>
+              {prerequisites.length > 0 && <p><strong>Antes de começar:</strong> {prerequisites.join('; ')}.</p>}
+              {status === 'in-progress' && <p><strong>Em construção:</strong> este texto já pode ser lido, mas ainda será completado. {pending}</p>}
+            </aside>
+          )}
           <slot />
+          {currentTrail && (
+            <nav class="study-navigation" aria-label="Navegação de estudos">
+              {previous && <a rel="prev" href={`/blog/${previous.id}/`}>← Anterior: {previous.title}</a>}
+              <a href={`/blog/#${trail}`}>Ver a trilha completa</a>
+              {next && <a rel="next" href={`/blog/${next.id}/`}>Próximo: {next.title} →</a>}
+            </nav>
+          )}
         </div>
       </article>
     </main>
     <Footer />
   </body>
 </html>
+
+<style>
+  .study-info { padding: 1rem; margin-bottom: 2rem; border: 1px solid rgb(var(--gray-light)); border-radius: 8px; font-size: 0.9em; }
+  .study-info p { margin: 0.4rem 0; }
+  .study-navigation { display: grid; gap: 0.8rem; border-top: 1px solid rgb(var(--gray-light)); margin-top: 3rem; padding: 1.5rem 0; }
+  h1 { font-size: clamp(2rem, 7vw, 3rem); }
+</style>

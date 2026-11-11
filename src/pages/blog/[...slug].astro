@@ -13,8 +13,13 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+const lessons = (await getCollection('blog'))
+  .filter((lesson) => lesson.data.trail === post.data.trail)
+  .sort((a, b) => a.data.order - b.data.order);
+const index = lessons.findIndex((lesson) => lesson.id === post.id);
+const navigationEntry = (lesson: CollectionEntry<'blog'> | undefined) => lesson && ({ id: lesson.id, title: lesson.data.title });
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} previous={navigationEntry(lessons[index - 1])} next={navigationEntry(lessons[index + 1])}>
 	<Content />
 </BlogPost>

@@ -3,6 +3,12 @@ title: 'Gradiente Descendente Múltiplo'
 pubDate: 2025-12-20
 description: 'Gradiente Descendente Múltiplo'
 heroImage: '/images/gradiente_multiplo.png'
+updatedDate: 2026-10-28
+trail: fundamentos
+order: 6
+status: in-progress
+prerequisites: ['Gradiente Descendente', 'Regressão Linear Múltipla', 'Vetorização']
+pending: 'Falta acrescentar um exemplo numérico e a implementação completa.'
 ---
 import Callout from '../../../components/Callout.astro'
 
@@ -15,7 +21,7 @@ Se você estiver lendo em sequência, deve ter visto o blog sobre vetorização.
 ### Recapitulação
 
 #### Definição dos Parâmetros
-Inicialmente, para treinarmos nosso modelo, temos que analisar nossas variáveis independentes que irão servir de parâmetros para o modelo.
+Inicialmente, para treinarmos nosso modelo, temos que definir os pesos associados às variáveis independentes e o viés. As variáveis são as entradas; os pesos e o viés são os parâmetros que o modelo aprende.
 
 Sem vetorização, temos:
 $$
@@ -29,7 +35,7 @@ $$
 
 #### O Modelo (Função de Predição)
 
-Agora, temos que definir como o modelo fará uma estimativa. Na Regressão Linear, fazemos uma reta para encaixar o máximo de valores corretos possíveis. Temos como fazer isso também de duas maneiras:
+Agora, temos que definir como o modelo fará uma estimativa. Na Regressão Linear, ajustamos uma função linear para minimizar o erro das previsões. Com uma entrada, seu gráfico é uma reta; com várias, é um hiperplano. Temos como fazer isso também de duas maneiras:
 
 **Sem vetorização**, onde temos o formato **escalar**:
 
@@ -62,15 +68,15 @@ Aqui é onde a otimização realmente acontece. O objetivo é ajustar os parâme
 **A Regra Geral (válida para ambos os casos):**
 
 $$
-parâmetro = parâmetro - \alpha \frac{\partial J}{\partial parâmetro}
+\theta = \theta - \alpha \frac{\partial J}{\partial \theta}
 $$
 
-Onde $\alpha$ é a **Taxa de Aprendizado** (Learning Rate), que controla o tamanho do "passo" dado em direção ao mínimo.
+Onde $\theta$ representa um parâmetro e $\alpha$ é a **Taxa de Aprendizado** (Learning Rate), que controla o tamanho do "passo" dado em direção ao mínimo.
 
 #### Comparação de Implementação:
 
-**1. Fluxo sem vetorização (Sequencial)**
-Neste cenário, o algoritmo precisa atualizar cada peso individualmente através de um loop iterativo. É um processo computacionalmente mais lento:
+**1. Fluxo sem vetorização (Com loops)**
+Neste cenário, calculamos as derivadas de cada peso através de um loop. Todas devem usar os parâmetros da mesma iteração; só depois aplicamos as atualizações, como vimos no texto de Gradiente Descendente:
 
 * **Para cada $w_j$ (de $1$ até $n$):**
     $$
@@ -81,7 +87,7 @@ Neste cenário, o algoritmo precisa atualizar cada peso individualmente através
     b = b - \alpha \left[ \frac{1}{m}\sum_{i=1}^{m}{(f_{w,b}(x^{(i)})-y^{(i)})} \right]
     $$
 
-**2. Fluxo vetorizado (Simultâneo)**
+**2. Fluxo vetorizado**
 Na vetorização, tratamos o conjunto completo de parâmetros como uma única entidade matemática. É aqui que o **Vetor Gradiente** entra em cena:
 
 * **Atualização de $\vec{w}$:** $$\vec{w} = \vec{w} - \alpha \nabla_{\vec{w}} J(\vec{w}, b)$$
@@ -93,6 +99,6 @@ Na vetorização, tratamos o conjunto completo de parâmetros como uma única en
 >
 > $$\nabla_{\vec{w}} J = \begin{bmatrix} \frac{\partial J}{\partial w_1} \\ \frac{\partial J}{\partial w_2} \\ \vdots \\ \frac{\partial J}{\partial w_n} \end{bmatrix}$$
 >
-> Ao utilizarmos a vetorização, o hardware processa esse vetor inteiro de uma só vez. Portanto, o **Gradiente Descendente Múltiplo** é a aplicação deste vetor para mover todos os parâmetros do modelo simultaneamente para o ponto de menor erro.
+> Ao utilizarmos a vetorização, delegamos o cálculo a rotinas otimizadas. Nos dois fluxos, as atualizações usam os mesmos valores anteriores dos parâmetros. Portanto, a atualização simultânea é uma propriedade do algoritmo, e não uma consequência da vetorização.
 
 **Conclusão:** O Gradiente Descendente Múltiplo é o ponto onde o Cálculo Diferencial (derivadas parciais) se encontra com a Álgebra Linear (vetores e matrizes). Logo, dominar a forma vetorizada é o que te permite escalar modelos de regressão simples para modelos mais complexos como redes neurais.

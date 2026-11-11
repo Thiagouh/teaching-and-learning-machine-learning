@@ -12,6 +12,11 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.string().optional(),
+			trail: z.enum(['fundamentos', 'ferramentas', 'visao-computacional']),
+			order: z.number().int().positive(),
+			status: z.enum(['published', 'in-progress']).default('published'),
+			prerequisites: z.array(z.string()).default([]),
+			pending: z.string().optional(),
 		}),
 });
 

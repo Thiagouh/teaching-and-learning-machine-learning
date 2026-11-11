@@ -4,9 +4,15 @@ description: 'Entendendo os fundamentos antes dos algoritmos'
 pubDate: 'Dec 20 2025'
 heroImage: '/images/intro_classificacao.png'
 tags: ['ml-basics', 'teoria']
+updatedDate: 2026-10-28
+trail: fundamentos
+order: 1
+status: in-progress
+prerequisites: ['Nenhum conhecimento prévio de Machine Learning']
+pending: 'Falta ampliar os exemplos e apresentar outras formas de aprendizado.'
 ---
 
-Quando falamos de Aprendizado de Máquina, se referimos a um modelo de inteligência artificial na qual aprende de forma autônama. E esse aprendizado pode ocorrer de diferentes formas. Os dois tipos principais são:
+Quando falamos de Aprendizado de Máquina, nos referimos a métodos de inteligência artificial que aprendem padrões a partir de dados. E esse aprendizado pode ocorrer de diferentes formas. Dois tipos importantes são:
 
 ## 1. Aprendizado Supervisionado
 
@@ -21,7 +27,7 @@ Quando falamos de Aprendizado de Máquina, se referimos a um modelo de inteligê
 
 ## 2. Aprendizado Não-Supervisionado
 
-Diferente do anterior, aqui não entregamos o gabarito. Nesse caso, o modelo irá receber os dados puros e irá precisar agrupar os dados conforme a similaridade entre eles sem saber o significado originalmente.
+Diferente do anterior, aqui não entregamos o gabarito. Nesse caso, o modelo procura padrões nos dados sem receber as respostas esperadas. Uma possibilidade é agrupar os dados conforme a similaridade entre eles, mas o aprendizado não supervisionado não se limita a isso.
 
 **Exemplo:**
 

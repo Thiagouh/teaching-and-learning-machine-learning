@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import { plannedLessons, statusLabels, trails } from '../data/trilhas';
+const posts = (await getCollection('blog')).sort((a, b) => a.data.order - b.data.order);
+---
+<div class="roadmap">
+  {trails.map((trail) => (
+    <section id={trail.id} aria-labelledby={`title-${trail.id}`}>
+      <h2 id={`title-${trail.id}`}>{trail.title}</h2>
+      <p>{trail.description}</p>
+      <ol>
+        {posts.filter((post) => post.data.trail === trail.id).map((post) => (
+          <li>
+            <div class="lesson-title">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              <span class={`study-badge ${post.data.status}`}>{statusLabels[post.data.status]}</span>
+            </div>
+            <p>{post.data.description}</p>
+          </li>
+        ))}
+        {plannedLessons.filter((lesson) => lesson.trail === trail.id).map((lesson) => (
+          <li>
+            <div class="lesson-title"><span>{lesson.title}</span><span class="study-badge planned">Planejado</span></div>
+            <p>{lesson.description}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+</div>
+<style>
+  section { margin-top: 2.5rem; scroll-margin-top: 1rem; }
+  h2 { font-size: 1.65em; }
+  ol { padding-left: 1.5rem; }
+  li { padding: 0.9rem 0; border-bottom: 1px solid rgb(var(--gray-light)); }
+  .lesson-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; }
+  li p { margin: 0.25rem 0 0; font-size: 0.9em; }
+</style>
